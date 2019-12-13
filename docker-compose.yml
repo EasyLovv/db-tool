@@ -1,0 +1,23 @@
+version: "3.4"
+
+
+services:
+
+  database:
+    image: postgres:11.4-alpine
+    environment:
+      POSTGRES_PASSWORD: dbtool
+      POSTGRES_USER: dbtool
+      POSTGRES_DB: dbtool
+    ports:
+      - 54320:5432
+
+  client:
+    volumes:
+      - ./db-tools/:/db-tools/
+      - ./r3/:/r3/
+    build:
+      context: ./db-tools
+      dockerfile: Dockerfile
+    depends_on:
+      - database
